@@ -4,44 +4,39 @@ using UnityEngine;
 
 public class BasketController : MonoBehaviour {
 
-
-
     public AudioClip appleSE;
     public AudioClip bombSE;
     AudioSource aud;
     GameObject director;
 
-
-
-	// Use this for initialization
-	void Start () {
+ void Start ()
+    {
         this.director = GameObject.Find("GameDirector");
-        this.aud = GetComponent<AudioSource>();
-		
+        this.aud = GetComponent<AudioSource>();	
 	}
 
-  
-
-    // Update is called once per frame
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
-
-        if (other.gameObject.tag == "Apple")
+        if(other.gameObject.tag=="Apple")
         {
-            this.director.GetComponent<GameObject>().GetApple();
+            this.director.GetComponent<GameDirector>().GetApple();
             this.aud.PlayOneShot(this.appleSE);
-           
         }
         else
         {
-            this.director.GetComponent<GameObject>().GetBomb();
+            this.director.GetComponent<GameDirector>().GetBomb();
             this.aud.PlayOneShot(this.bombSE);
         }
-     
         Destroy(other.gameObject);
     }
-    void Update () {
-		if(Input.GetMouseButton(0))
+
+    // Use this for initialization
+   
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
